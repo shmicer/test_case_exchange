@@ -4,20 +4,24 @@ services:
   web: &web
     build:
       context: .
-      dockerfile: compose/.local/django/Dockerfile
+      dockerfile: compose/local/django/Dockerfile
     volumes:
       - ./:/app
     env_file:
       - .envs/.local/.django
+      - .envs/.local/.postgres
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+
   db:
-    image: postgres:13.0-alpine
+    image: postgres:latest
     ports:
-      - "30333:5432"
+      - "5432:5432"
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data1/
     env_file:
       - .envs/.local/.postgres
 
@@ -42,3 +46,6 @@ services:
 #    depends_on:
 #      - web
 #      - redis
+
+volumes:
+  postgres_data: {}
