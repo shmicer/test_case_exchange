@@ -13,10 +13,6 @@ class Transaction(models.Model):
     exchange_rate = models.DecimalField(max_digits=10, decimal_places=5)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user.username} - {self.amount_from} {self.currency_from} to {self.amount_to} {self.currency_to}"
-
     def save(self, *args, **kwargs):
         self.amount_to = self.amount_from * Decimal(str(self.exchange_rate))
         super().save(*args, **kwargs)
-

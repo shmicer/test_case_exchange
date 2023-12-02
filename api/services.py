@@ -1,5 +1,6 @@
-from api.tasks import get_currency_rates_task
 from django.core.cache import cache
+
+from api.tasks import get_currency_rates_task
 
 
 def convert(from_currency, to_currency):

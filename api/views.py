@@ -2,7 +2,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
 from api.models import Transaction
-from api.serializers import TransactionCreateSerializer, TransactionViewSerializer
+from api.serializers import (TransactionCreateSerializer,
+                             TransactionViewSerializer)
 from api.services import convert
 
 
