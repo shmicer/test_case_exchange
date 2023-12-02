@@ -4,9 +4,11 @@ from api.tasks import get_currency_rates_task
 
 
 def convert(from_currency, to_currency):
-    if f'{from_currency}:currency_data' in cache:
-        data = cache.get(f'{from_currency}:currency_data')
+    data_key = f'{from_currency}:currency_data'
+    if data_key in cache:
+        data = cache.get(data_key)
     else:
-        data = get_currency_rates_task()
+        get_currency_rates_task()
+        data = cache.get(data_key)
     result = data[to_currency]['value']
     return result
