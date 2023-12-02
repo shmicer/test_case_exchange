@@ -1,0 +1,10 @@
+# Django
+# ------------------------------------------------------------------------------
+DEBUG=TRUE
+SECRET_KEY="Your secret key"
+DJANGO_SETTINGS_MODULE="config.settings.local"
+
+CURRENCY_API_KEY='your_currency_api_key'
+
+CELERY_BROKER=redis://redis:6379/0
+CELERY_BACKEND=redis://redis:6379/0
