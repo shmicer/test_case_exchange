@@ -9,10 +9,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 app = Celery('config')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
-#
-# app.conf.beat_schedule = {
-#     'receiving_actual_currency_rates_every_24_hours': {
-#         'task': 'api.tasks.get_currency_rates_task',
-#         'schedule': crontab(minute='0', hour='12'),
-#     },
-# }
+
+app.conf.beat_schedule = {
+    'receiving_actual_currency_rates_every_24_hours': {
+        'task': 'api.tasks.get_currency_rates_task',
+        'schedule': crontab(hour='*/23'),
+    },
+}
