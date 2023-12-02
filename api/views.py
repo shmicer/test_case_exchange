@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
@@ -7,6 +8,9 @@ from api.serializers import (TransactionCreateSerializer,
 from api.services import convert
 
 
+@extend_schema(
+    summary='Create a transaction',
+)
 class TransactionCreateView(generics.CreateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionCreateSerializer
@@ -21,6 +25,9 @@ class TransactionCreateView(generics.CreateAPIView):
         serializer.save(user=self.request.user, exchange_rate=exchange_rate)
 
 
+@extend_schema(
+    summary='List of current user transactions',
+)
 class TransactionListView(generics.ListAPIView):
     serializer_class = TransactionViewSerializer
     permission_classes = [IsAuthenticated]
@@ -28,7 +35,9 @@ class TransactionListView(generics.ListAPIView):
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
 
-
+@extend_schema(
+    summary='Retrieve, update and delete transaction',
+)
 class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TransactionViewSerializer
     permission_classes = [IsAuthenticated]

@@ -7,15 +7,37 @@
 - На данный момент доступно 7 валют для конвертации: ['AED', 'USD', 'EUR', 'RUB', 'TRY', 'CNY', 'HKD'].
 - Курсы валют запрашиваются со стороннего сервиса https://currencyapi.com/ раз в сутки с помощью Celery
 - Чтобы уменьшить число запросов к стороннему сервису, полученные данные кэшируются с помощью Redis.
-- 
 
 Стек используемых технологий:
-* Django Rest Framework
-* Docker
-* Docker-compose
-* PostgreSQL
-* Redis
-* Celery
+* Django Rest Framework для создания API;
+* Docker, Docker-compose для запуска приложений в контейнерах;
+* PostgreSQL как база данных;
+* Redis как брокер сообщений для Celery, а также для кэширования;
+* Celery для создания отложенных задач(в данном случае для запроса данных с внешнего API);
+
+## Установка
+
+1. Скачайте репозиторий : `git clone https://github.com/shmicer/test_case_exchange`;
+2. Смените директорию: `cd test_case_exchange`:
+3. Переименуйте папку `.envs.example` в `.envs` и добавьте свои API ключи.
+
+Используя Docker:
+
+```
+$ docker compose -f local.yml build
+
+$ docker compose -f local.yml up
+
+```
+
+Приложение будет доступно по ссылке http://localhost:8000
+
+### Документация 
+
+Документация к API доступна по ссылке
+
+http://0.0.0.0:8000/api/schema/swagger-ui/
+
 
 ### Регистрация пользователей:
 
@@ -98,4 +120,6 @@
 ```
 
 Для удаления транзакции необходимо выполнить DELETE запрос по URL api/transactions/{id}
+
+
 
