@@ -144,6 +144,14 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+CACHES = {
+    'default': {
+        'BACKEND': "django.core.cache.backends.redis.RedisCache",
+        'LOCATION': 'redis://redis:6379/1',
+        "TIMEOUT": 60 * 60 * 24,
+    }
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

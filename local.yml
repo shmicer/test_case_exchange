@@ -25,27 +25,27 @@ services:
     env_file:
       - .envs/.local/.postgres
 
-#  redis:
-#    image: redis
-#    container_name: redis-container
-#    ports:
-#      - "6379:6379"
-#  worker:
-#    <<: *web
-#    command: celery --app=config worker --loglevel=info
-#    links:
-#      - redis
-#    ports: []
-#    depends_on:
-#      - api
-#      - redis
-#  beat:
-#    <<: *web
-#    command: celery --app=config beat --loglevel=info
-#    ports: []
-#    depends_on:
-#      - web
-#      - redis
+  redis:
+    image: redis
+    container_name: redis-currency
+    ports:
+      - "6379:6379"
+  worker:
+    <<: *web
+    command: celery --app=config worker --loglevel=info
+    links:
+      - redis
+    ports: []
+    depends_on:
+      - web
+      - redis
+  beat:
+    <<: *web
+    command: celery --app=config beat --loglevel=info
+    ports: []
+    depends_on:
+      - web
+      - redis
 
 volumes:
   postgres_data: {}
