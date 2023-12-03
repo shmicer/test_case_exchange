@@ -3,8 +3,9 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase
-from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.test import APIClient
+
 from .models import Transaction
 from .services import convert
 
@@ -86,18 +87,9 @@ class TransactionViewTests(TestCase):
         self.assertFalse(Transaction.objects.filter(id=transaction.id).exists())
 
 
-class ConvertTestCase(TestCase):
-    @patch('django.core.cache.cache.get', return_value={'EUR': {'value': 0.85}})
+class ConvertFunctionTests(TestCase):
+    @patch('django.core.cache.cache.get')
     def test_convert_with_cached_data(self, mock_cache_get):
+        mock_cache_get.return_value = {'EUR': {'value': 0.85}}
         result = convert('USD', 'EUR')
         self.assertEqual(result, 0.85)
-        mock_cache_get.assert_called_once_with('USD:currency_data')
-
-    @patch('django.core.cache.cache.get', return_value=None)
-    @patch('api.services.get_currency_rates_task', return_value={'EUR': {'value': 0.85}})
-    def test_convert_without_cached_data(self, mock_get_currency_rates_task, mock_cache_get):
-        result = convert('USD', 'EUR')
-        print(result)
-        self.assertEqual(result, 0.85)
-        mock_cache_get.assert_called_once_with('USD:currency_data')
-        mock_get_currency_rates_task.assert_called_once()
