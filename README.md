@@ -121,5 +121,10 @@ http://0.0.0.0:8000/api/schema/swagger-ui/
 
 Для удаления транзакции необходимо выполнить DELETE запрос по URL api/transactions/{id}
 
+Так же в репозитории присутствуют тесты, которые можно запустить командой
 
+```python
+ docker-compose -f local.yml exec web python3 manage.py test
+
+```
 

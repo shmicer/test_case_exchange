@@ -35,6 +35,7 @@ class TransactionListView(generics.ListAPIView):
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
 
+
 @extend_schema(
     summary='Retrieve, update and delete transaction',
 )
