@@ -22,10 +22,10 @@ def get_currency_rates_task():
         tasks.append(fetch_currency_data(base, url))
 
 
-async def fetch_currency_data(base, url):
+def fetch_currency_data(base, url):
     try:
         response = requests.get(url)
         result = response.json()['data']
         cache.set(f'{base}:currency_data', result)
-    except httpx.HTTPError as e:
+    except Exception as e:
         logger.error(f"Failed to fetch currency data for {base}. Error: {e}")
